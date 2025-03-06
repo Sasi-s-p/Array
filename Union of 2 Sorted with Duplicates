@@ -1,0 +1,80 @@
+Input: a[] = [1, 2, 3, 4, 5], b[] = [1, 2, 3, 6, 7]
+Output: 1 2 3 4 5 6 7
+Explanation: Distinct elements including both the arrays are: 1 2 3 4 5 6 7.
+Input: a[] = [2, 2, 3, 4, 5], b[] = [1, 1, 2, 3, 4]
+Output: 1 2 3 4 5
+Explanation: Distinct elements including both the arrays are: 1 2 3 4 5.
+Input: a[] = [1, 1, 1, 1, 1], b[] = [2, 2, 2, 2, 2]
+Output: 1 2
+Explanation: Distinct elements including both the arrays are: 1 2.
+Solution:
+class Solution {
+  public:
+    // a,b : the arrays
+    // Function to return a list containing the union of the two arrays.
+    vector<int> findUnion(vector<int> &a, vector<int> &b) {
+    int i=0,j=0;
+    vector<int>res;
+   // remove(a);
+    //remove(b);
+    int prev=INT_MIN;
+    int bprev=INT_MIN;
+    while(i<a.size()&&j<b.size()){
+        if(a[i]==b[j]){
+            if(prev!=a[i]){
+            prev=a[i];
+            bprev=a[i];
+            res.push_back(a[i]);
+            }
+            i++,j++;
+        }
+                else if(a[i]<b[j]){
+                    if(prev!=a[i]){
+                        prev=a[i];
+                    res.push_back(a[i]);
+                    }
+                    i++;
+                    
+                }
+                else{
+                    if(bprev!=b[j]){
+                        bprev=b[j];
+                    res.push_back(b[j]);
+                    }
+                    j++;                    
+                }
+        }
+        
+        while(i<a.size()){
+            if(prev!=a[i]){
+                prev=a[i];
+            res.push_back(a[i]);
+            }
+            i++;
+        }
+        while(j<b.size()){
+            if(bprev!=b[j]){
+                bprev=b[j];
+                res.push_back(b[j]);
+            }
+            
+            j++;
+        }
+
+        return res;
+}
+public:
+void remove(vector<int>&a){
+    int i,j;
+    for(i=0;i<a.size();i++){
+        for(j=0;j<i;j++){
+            if(a[i]==a[j])
+            break;
+        }
+        if(i!=j){
+            a.erase(a.begin()+i);
+            i--;
+        }
+    }
+}
+};
